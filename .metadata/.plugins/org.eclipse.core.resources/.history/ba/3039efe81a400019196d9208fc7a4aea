@@ -1,0 +1,20 @@
+package com.qa.test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Test {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		List<String> listObj = new ArrayList<String>();
+		listObj.add("A");
+		listObj.add("B");
+		listObj.add("C");
+		listObj.add("D");
+		listObj.add("E");
+		
+	}
+
+}

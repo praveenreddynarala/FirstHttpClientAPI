@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;com.praveen.sampleRestAssureAPI&apos; to &apos;TestRestAssureAPI&apos;" description="Rename resource &apos;com.praveen.sampleRestAssureAPI&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="/com.praveen.sampleRestAssureAPI" name="TestRestAssureAPI" stamp="1551833355848" updateReferences="true"/>
+</session>

@@ -1,0 +1,36 @@
+package com.qa.test;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+
+public class Test {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		List<String> listObj = new ArrayList<String>();
+		listObj.add("A");
+		listObj.add("B");
+		listObj.add("C");
+		listObj.add("D");
+		listObj.add("E");
+		
+		ListIterator<String> iObj = listObj.listIterator();
+		while(iObj.hasNext()) {
+			
+			iObj.next();
+			iObj.next();
+			iObj.next();
+			iObj.next();
+			
+			iObj.remove();
+			
+			iObj.
+			
+		}
+		
+	}
+
+}

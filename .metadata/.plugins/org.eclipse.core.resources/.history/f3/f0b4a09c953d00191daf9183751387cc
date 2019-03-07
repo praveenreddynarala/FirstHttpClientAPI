@@ -1,0 +1,93 @@
+package com.qa.testcases;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.qa.data.Users;
+import com.qa.restclient.RestClient;
+import com.qa.testbase.TestBase;
+import com.qa.util.TestUtil;
+
+public class PostAPITest extends TestBase {
+
+	TestBase testBase;
+	String sUrl;
+	String sAppUrl;
+	String url;
+	CloseableHttpResponse httpResponse;
+
+	
+	@BeforeMethod
+	public void setUp() {
+		testBase = new TestBase();
+		sUrl = prop.getProperty("URL");
+		sAppUrl = prop.getProperty("ServiceURL");
+		url = sUrl + sAppUrl;
+	}
+	
+	//Post data using headers
+	@Test
+	public void testPostClientHeaderCall() throws JsonGenerationException, JsonMappingException, IOException, JSONException {
+		Users userObj = new Users("Praveen", "Manager"); //Expected users object
+		
+		//Jackson API for databinding
+		ObjectMapper objMapper = new ObjectMapper();
+		
+		//Object to JSON file
+		objMapper.writeValue(new File("C:/Automation/Workspace/FirstRestApi/FirstRestAssureAPI/src/main/java/com/qa/data/Users.json"), userObj);
+		
+		//Java Object to JSON in String
+		String usersJsonString = objMapper.writeValueAsString(userObj);
+		
+		
+		//Headers
+		HashMap<String, String> headerMap = new HashMap<String, String>();
+		headerMap.put("Content-Type", "application/json");
+		
+		//Response
+		httpResponse =  RestClient.getInstance().post(url, usersJsonString, headerMap);
+		
+		
+		//1. Status Code
+		int postStatusCode =  httpResponse.getStatusLine().getStatusCode();
+		Assert.assertEquals(postStatusCode, RESPONSE_CODE_201);
+		
+		//2. JSON String Response
+		String responseString =  EntityUtils.toString(httpResponse.getEntity(), "UTF-8");
+		JSONObject jsonResponse = new JSONObject(responseString);
+		System.out.println("JSON Post Call Response-->" + jsonResponse);
+		
+		//json to java object
+		Users userMapperObj = objMapper.readValue(responseString, Users.class); //Actual users object
+		System.out.println("Users-->" + userObj);
+		Assert.assertTrue(userObj.getName().equals(userMapperObj.getName()), "User not created through post call");
+		Assert.assertTrue(userObj.getJob().equals(userMapperObj.getJob()), "Job not created through post call");
+	
+	}
+	
+	@Test
+	public void testPostClient() throws JsonGenerationException, JsonMappingException, IOException {
+		Users userObj = new Users("Praveen", "Manager");
+		ObjectMapper objMapper = new ObjectMapper();
+		objMapper.writeValue(new File("C:/Automation/Workspace/FirstRestApi/FirstRestAssureAPI/src/main/java/com/qa/data/Users.json"), userObj);
+		String usersJSONString = objMapper.writeValueAsString(userObj);
+		httpResponse = RestClient.getInstance().post(url, usersJSONString);
+		Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), RESPONSE_CODE_201);
+		
+		//Get status code
+		int responseStatusCode = httpResponse.getStatusLine().getStatusCode();
+		Assert.assertEquals(responseStatusCode, RESPONSE_CODE_201);
+	}
+}

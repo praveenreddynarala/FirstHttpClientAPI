@@ -1,0 +1,62 @@
+package com.qa.testcases;
+
+import java.util.HashMap;
+
+import org.apache.http.Header;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
+import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
+import com.qa.restclient.RestClient;
+import com.qa.testbase.TestBase;
+import com.qa.util.TestUtil;
+
+public class GetTestClass extends TestBase {
+
+	TestBase testBase;
+	String sUrl;
+	String sAppUrl;
+	String url;
+	CloseableHttpResponse httpResponse;
+
+	
+	@BeforeMethod
+	public void setUp() {
+		testBase = new TestBase();
+		sUrl = prop.getProperty("URL");
+		sAppUrl = prop.getProperty("ServiceURL");
+		url = sUrl + sAppUrl;
+	}
+	
+	@Test
+	public void testGetCall() {
+		
+		httpResponse =  RestClient.getInstance().get(url);
+		
+		//Get status code
+		int statusCode =  httpResponse.getStatusLine().getStatusCode();
+		System.out.println("Status code-->" + statusCode);
+		
+		Assert.assertEquals(statusCode, RESPONSE_CODE_200, "Status code is not 200");
+		
+		//Get JSON string response
+		JSONObject responseJSON =  RestClient.getInstance().getJSONResponse();
+		Assert.assertEquals(Integer.parseInt((TestUtil.getValueByJPath(responseJSON, "/per_page"))), 3);
+		Assert.assertEquals(Integer.parseInt((TestUtil.getValueByJPath(responseJSON, "/total_pages"))), 4);
+		
+		Assert Data Array
+		Assert.assertEquals((TestUtil.getValueByJPath(responseJSON, "/data[0]/first_name")), "Eve");
+		
+				
+		//Get Headers
+		Header[] headers =  httpResponse.getAllHeaders();
+		HashMap<String, String> hashMap = new HashMap<String, String>();
+		for(Header header : headers) {
+			hashMap.put(header.getName(), header.getValue());
+		}
+		System.out.println("Headers-->" + hashMap.toString());
+	}
+}

@@ -1,0 +1,13 @@
+package com.qa.data;
+
+public class Users {
+
+	
+	String name = "Praveen";
+	String job = "Manager";
+	
+	public Users() {
+		
+	}
+	
+}

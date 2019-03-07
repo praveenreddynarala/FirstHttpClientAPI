@@ -1,0 +1,19 @@
+package com.qa.testcases;
+
+import java.io.IOException;
+
+import org.json.JSONException;
+import org.testng.annotations.Test;
+
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
+public class DeleteAPITest {
+
+	
+	@Test
+	public void testDeleteClient() throws JsonGenerationException, JsonMappingException, IOException, JSONException {
+		
+	}
+	
+}

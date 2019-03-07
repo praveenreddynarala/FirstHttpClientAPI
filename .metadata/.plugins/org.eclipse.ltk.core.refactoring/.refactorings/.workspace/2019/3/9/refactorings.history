@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename Java project &apos;com.praveen.sampleRestApi&apos; to &apos;FirstRestAssureAPI&apos;&#x0D;&#x0A;- Original element: &apos;com.praveen.sampleRestApi&apos;&#x0D;&#x0A;- Renamed element: &apos;com.praveen.sampleRestApi&apos;&#x0D;&#x0A;- Update references to refactored element" description="Rename Java project &apos;com.praveen.sampleRestApi&apos;" flags="7" id="org.eclipse.jdt.ui.rename.java.project" input="=com.praveen.sampleRestApi" name="FirstRestAssureAPI" references="true" stamp="1551495896330" version="1.0"/>
+</session>

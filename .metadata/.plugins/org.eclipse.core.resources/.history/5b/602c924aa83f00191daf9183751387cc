@@ -1,0 +1,31 @@
+package com.qa.testcases;
+
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
+import com.qa.testbase.TestBase;
+
+public class DeleteAPITest {
+
+	TestBase testBase;
+	String sUrl;
+	String sAppUrl;
+	String url;
+	CloseableHttpResponse httpResponse;
+
+	
+	@BeforeMethod
+	public void setUp() {
+		testBase = new TestBase();
+		sUrl = prop.getProperty("URL");
+		sAppUrl = prop.getProperty("ServiceURL");
+		url = sUrl + sAppUrl;
+	}
+	
+	@Test
+	public void testDeleteClient() {
+		
+	}
+	
+}

@@ -1,0 +1,39 @@
+package com.qa.data;
+
+public class Users {
+
+	
+	String name = "Praveen";
+	String job = "Manager";
+	
+	private static Users userObj = null;
+	
+	private Users(String name, String job) {
+		this.name = name;
+		this.job = job;
+	}
+	
+	public static Users getinstance(String name, String job) {
+		if(userObj == null)
+			userObj = new Users(name, job);
+		return userObj;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getJob() {
+		return job;
+	}
+
+	public void setJob(String job) {
+		this.job = job;
+	}
+
+	
+}

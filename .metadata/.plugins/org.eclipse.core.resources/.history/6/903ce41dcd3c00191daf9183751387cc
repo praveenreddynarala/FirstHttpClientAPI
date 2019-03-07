@@ -1,0 +1,59 @@
+package com.qa.testcases;
+
+import java.util.HashMap;
+
+import org.apache.http.Header;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
+import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
+import com.qa.restclient.RestClient;
+import com.qa.testbase.TestBase;
+
+public class GetTestClass extends TestBase {
+
+	TestBase testBase;
+	String sUrl;
+	String sAppUrl;
+	String url;
+	CloseableHttpResponse httpResponse;
+
+	
+	@BeforeMethod
+	public void setUp() {
+		testBase = new TestBase();
+		sUrl = prop.getProperty("URL");
+		sAppUrl = prop.getProperty("ServiceURL");
+		url = sUrl + sAppUrl;
+	}
+	
+	@Test
+	public void testGetCall() {
+		
+		httpResponse =  RestClient.getInstance().get(url);
+		
+		//Get status code
+		int statusCode =  httpResponse.getStatusLine().getStatusCode();
+		System.out.println("Status code-->" + statusCode);
+		
+		Assert.assertEquals(statusCode, expected);
+		//Get JSON string response
+		String responseString = EntityUtils.toString(httpResponse.getEntity(), "UTF-8");
+		System.out.println("Response string-->" + responseString);
+		
+		//Convert string response to JSON
+		JSONObject responseJSON = new JSONObject(responseString);
+		System.out.println("JSON response-->" + responseJSON);
+		
+		//Get Headers
+		Header[] headers =  httpResponse.getAllHeaders();
+		HashMap<String, String> hashMap = new HashMap<String, String>();
+		for(Header header : headers) {
+			hashMap.put(header.getName(), header.getValue());
+		}
+		System.out.println("Headers-->" + hashMap.toString());
+	}
+}

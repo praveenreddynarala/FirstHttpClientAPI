@@ -1,0 +1,13 @@
+package com.qa.testbase;
+
+import java.util.Properties;
+
+public class TestBase {
+
+	public Properties prop;
+	
+	public TestBase() {
+		
+	}
+	
+}
